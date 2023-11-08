@@ -70,9 +70,9 @@ async def serve(q: Q):
             image='https://wave.h2o.ai/img/h2o-logo.svg',
             items=[
                 ui.links(inline=True, items=[
-                    ui.link(label='Sample link', path='https://www.h2o.ai/', target='_blank'),
-                    ui.link(label='Sample link', path='https://www.h2o.ai/', target='_blank'),
-                    ui.link(label='Sample link', path='https://www.h2o.ai/', target='_blank'),
+                    ui.link(label='Data Analyzer', path='/data-analyzer', target='_blank'),
+                    ui.link(label='Model Analyzer', path='/model-analyzer', target='_blank'),
+                    ui.link(label='docs', path='https://www.h2o.ai/', target='_blank'),
                 ])
             ]
         )
