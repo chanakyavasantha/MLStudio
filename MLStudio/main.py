@@ -60,7 +60,7 @@ anime.timeline({loop: true})
 
 
 
-@app('/demo')
+@app('/main')
 async def serve(q: Q):
     if not q.client.initialized:
         q.page['header'] = ui.header_card(
