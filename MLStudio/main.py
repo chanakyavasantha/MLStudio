@@ -20,7 +20,7 @@ html = '''
 .anim {
   font-weight: 900;
   font-size: 3.5em;
-  color: #1ABC9C;
+  color: #F1C40F;
 }
 .anim .letter {
   display: inline-block;
