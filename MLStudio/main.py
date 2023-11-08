@@ -28,7 +28,7 @@ html = '''
 }
 </style>
 
-<h1 id="animation" class="anim">Be Aware Legally!</h1>
+<h1 id="animation" class="anim">Welcome to Machine Learning Studio!</h1>
 '''
 
 script = '''
@@ -63,6 +63,19 @@ anime.timeline({loop: true})
 @app('/demo')
 async def serve(q: Q):
     if not q.client.initialized:
+        q.page['header'] = ui.header_card(
+            box='1 1 12 1',
+            title='My app',
+            subtitle='My app subtitle',
+            image='https://wave.h2o.ai/img/h2o-logo.svg',
+            items=[
+                ui.links(inline=True, items=[
+                    ui.link(label='Sample link', path='https://www.h2o.ai/', target='_blank'),
+                    ui.link(label='Sample link', path='https://www.h2o.ai/', target='_blank'),
+                    ui.link(label='Sample link', path='https://www.h2o.ai/', target='_blank'),
+                ])
+            ]
+        )
         q.page['banner'] = ui.meta_card(
         box='',
         # Load anime.js
@@ -76,29 +89,12 @@ async def serve(q: Q):
             targets=['animation'],
         ))
         q.page['banner_1'] = ui.markup_card(
-            box='1 1 12 12',
-            title='Legal Aware Chat Bot',
+            box='1 2 12 12',
+            title='',
             content=html,
         )
-        q.page['example'] = ui.chatbot_card(
-            box='1 3 12 8',
-            data=data(fields='content from_user', t='list'),
-            name='chatbot',
-            events=['stop']
-        )
-        q.client.initialized = True
 
     # Handle the stop event.
-    if q.events.chatbot and q.events.chatbot.stop:
-        # Cancel the streaming task.
-        q.client.task.cancel()
-        # Hide the "Stop generating" button.
-        q.page['example'].generating = False
     # A new message arrived.
-    elif q.args.chatbot:
-        # Append user message.
-        q.page['example'].data += [q.args.chatbot, True]
-        # Run the streaming within cancelable asyncio task.
-        q.client.task = asyncio.create_task(stream_message(q))
 
     await q.page.save()
