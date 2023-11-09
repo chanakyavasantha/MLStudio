@@ -24,7 +24,7 @@ def DisplayData(df,q):
     
 
 
-@app('/demo')
+@app('/dataAnalyzer')
 async def serve(q: Q):
     q.page['header'] = ui.header_card(
             box='1 1 12 1',
