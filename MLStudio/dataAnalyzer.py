@@ -30,7 +30,7 @@ def Displaystat(df,q):
                 name='table',
                 columns=[ui.table_column(name=i, label=i, min_width='200',cell_type=ui.markdown_table_cell_type(target='_blank')) for i in df.columns],
                 height='450px',
-                rows=[ui.table_row(name=f'row{i}', cells=list(str(i) for i in df.values[i])) for i in range(5)],
+                rows=[ui.table_row(name=f'row{i}', cells=list(str(i) for i in df.values[i])) for i in range(len(df))],
             )
     ])
     q.client.form_count += 6
@@ -66,6 +66,7 @@ async def serve(q: Q):
             DisplayData(pd.read_csv(local_path),q)  
             df = pd.read_csv(local_path)
             dfStat = pd.DataFrame(df.describe())
+            print(dfStat)
             Displaystat(dfStat, q)
 
             items.append(ui.link(label=f'{os.path.basename(link)} ({size} bytes)', download=True, path=link))
