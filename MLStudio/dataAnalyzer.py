@@ -21,6 +21,19 @@ def DisplayData(df,q):
             )
     ])
     q.client.form_count += 6
+
+def Displaystat(df,q):
+    q.page[f'table{q.client.form_count}'] = ui.form_card(box=f'1 {q.client.form_count} 12 6', items=[
+            # modify heading here (content)
+            ui.text_xl(content='Basic Statistics of Data'),
+            ui.table(
+                name='table',
+                columns=[ui.table_column(name=i, label=i, min_width='200',cell_type=ui.markdown_table_cell_type(target='_blank')) for i in df.columns],
+                height='450px',
+                rows=[ui.table_row(name=f'row{i}', cells=list(str(i) for i in df.values[i])) for i in range(5)],
+            )
+    ])
+    q.client.form_count += 6
     
 
 
@@ -51,6 +64,9 @@ async def serve(q: Q):
             size = os.path.getsize(local_path)
             #print(pd.read_csv(local_path))
             DisplayData(pd.read_csv(local_path),q)  
+            df = pd.read_csv(local_path)
+            dfStat = pd.DataFrame(df.describe())
+            Displaystat(dfStat, q)
 
             items.append(ui.link(label=f'{os.path.basename(link)} ({size} bytes)', download=True, path=link))
             # Clean up
